@@ -1,0 +1,160 @@
+{
+  "info": {
+    "_postman_id": "meeting-scheduler-api",
+    "name": "Meeting Scheduler API",
+    "description": "API collection for Meeting Scheduler Backend - Create meetings, manage participants, detect conflicts, export to ICS format, and receive email notifications.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Documentation",
+      "item": [
+        {
+          "name": "Swagger UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/schema/swagger/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "schema", "swagger", ""]
+            },
+            "description": "Interactive Swagger UI documentation for all API endpoints"
+          }
+        },
+        {
+          "name": "OpenAPI Schema",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/schema/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "schema", ""]
+            },
+            "description": "OpenAPI 3.0 JSON schema"
+          }
+        },
+        {
+          "name": "ReDoc Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/schema/redoc/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "schema", "redoc", ""]
+            },
+            "description": "ReDoc alternative API documentation"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Meetings",
+      "item": [
+        {
+          "name": "Create Meeting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Q1 Planning Meeting\",\n  \"description\": \"Quarterly planning and review session\",\n  \"start_time\": \"2024-02-15T10:00:00Z\",\n  \"end_time\": \"2024-02-15T11:30:00Z\",\n  \"participants\": [\n    {\n      \"email\": \"john@example.com\"\n    },\n    {\n      \"email\": \"jane@example.com\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/meetings/create/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "meetings", "create", ""]
+            },
+            "description": "Create a new meeting with participants. Automatically checks for scheduling conflicts and sends email notifications."
+          },
+          "response": []
+        },
+        {
+          "name": "List All Meetings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/meetings/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "meetings", ""]
+            },
+            "description": "Retrieve a list of all scheduled meetings with basic information"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Meeting Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/meetings/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "meetings", "1", ""]
+            },
+            "description": "Get detailed information about a specific meeting including all participants"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Participants to Meeting",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [\n    {\n      \"email\": \"newperson@example.com\"\n    },\n    {\n      \"email\": \"another@example.com\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/meetings/1/add-participants/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "meetings", "1", "add-participants", ""]
+            },
+            "description": "Add new participants to an existing meeting. Checks for scheduling conflicts and sends email notifications."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Calendar & Export",
+      "item": [
+        {
+          "name": "Export Meeting as ICS",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/meetings/1/ics/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "meetings", "1", "ics", ""]
+            },
+            "description": "Download meeting as RFC 5545 compliant ICS file. Compatible with Outlook, Google Calendar, Apple Calendar, and other calendar applications."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ]
+}
